@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {},
+
+    "module": "commonjs",
+    "target": "ESNext",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "noEmit": false,
+
+    "outDir": "dist",
+    "strict": true,
+    "noUnusedLocals": true
+  },
+  "exclude": ["node_modules", "dist"]
+}
