@@ -1,11 +1,11 @@
 import commander from 'commander';
-import { pathExists, writeFile } from 'fs-extra';
+import { ensureFile, pathExists, writeFile } from 'fs-extra';
 import open from 'open';
 import prompts from 'prompts';
 import which from 'which';
 
-import { Config, getAccountConfig } from './account';
-import { DEFAULT_ACCOUNT_FILE_PATH, DEFAULT_ACCOUNT_TEMPLATE } from './constants';
+import { Config, getAccountConfig, getConfigPath } from './account';
+import { DEFAULT_ACCOUNT_FILE_PATH, DEFAULT_ACCOUNT_TEMPLATE, HOME_CONFIG_DIR } from './constants';
 import { Errors, OperationalError } from './error';
 import { spawn } from './process';
 
@@ -77,12 +77,23 @@ async function doDefaultAccount() {
       throw new Errors.ConfigFileExists(undefined, '默认配置文件已存在, 无法重新生成');
     }
 
+    await ensureFile(DEFAULT_ACCOUNT_FILE_PATH);
     await writeFile(DEFAULT_ACCOUNT_FILE_PATH, DEFAULT_ACCOUNT_TEMPLATE);
   }
 
   if (options.open) {
-    console.log(DEFAULT_ACCOUNT_FILE_PATH);
-    await open(DEFAULT_ACCOUNT_FILE_PATH);
+    const path = await getConfigPath(HOME_CONFIG_DIR);
+    console.log(path);
+
+    if (!path) {
+      throw new Errors.ConfigFileNotFound(undefined, '请使用 --init 生成默认配置文件');
+    }
+
+    if (path.endsWith('.json5')) {
+      await spawn(`code ${path}`);
+    } else {
+      await open(path);
+    }
   }
 
   return options.init || options.open;

@@ -83,4 +83,4 @@ async function getAccountConfig() {
 }
 
 export type { Config };
-export { getAccountConfig };
+export { getAccountConfig, getConfigPath };
