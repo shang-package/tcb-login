@@ -1,4 +1,4 @@
-# tcb local switch login
+# [tcb local switch login](https://github.com/shang-package/tcb-login)
 
 ## 如何使用
 
@@ -77,5 +77,5 @@ pnpm start
 ## 发版
 
 ```bash
-pnpm deploy
+pnpm run deploy
 ```
