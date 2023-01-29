@@ -94,6 +94,8 @@ function buildErrors(): ERRORS {
           message ?? defaultError.message,
           code ?? defaultError.code,
         );
+
+        this.name = code;
       }
     }
 

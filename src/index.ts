@@ -4,6 +4,7 @@ import open from 'open';
 import prompts from 'prompts';
 import which from 'which';
 
+import pkg from '../package.json';
 import { Config, getAccountConfig, getConfigPath } from './account';
 import { DEFAULT_ACCOUNT_FILE_PATH, DEFAULT_ACCOUNT_TEMPLATE, HOME_CONFIG_DIR } from './constants';
 import { Errors, OperationalError } from './error';
@@ -11,10 +12,11 @@ import { spawn } from './process';
 
 const { program, Option } = commander;
 program
+  .name('tcbl')
   .description('登录腾讯云开发 CloudBase')
-  .version('0.0.1')
+  .version(pkg.version)
   .addOption(new Option('-a, --account <account>', '登录账户'))
-  .addOption(new Option('-o, --open', '打开默认配置文件'))
+  .addOption(new Option('-o, --open [open]', '打开默认配置文件'))
   .addOption(new Option('--init', '生成默认配置文件'));
 
 program.parse(process.argv);
@@ -89,7 +91,9 @@ async function doDefaultAccount() {
       throw new Errors.ConfigFileNotFound(undefined, '请使用 --init 生成默认配置文件');
     }
 
-    if (path.endsWith('.json5')) {
+    if (typeof options.open === 'string') {
+      await spawn(`${options.open} ${path}`);
+    } else if (path.endsWith('.json5')) {
       await spawn(`code ${path}`);
     } else {
       await open(path);

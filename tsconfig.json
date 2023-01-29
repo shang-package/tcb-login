@@ -10,6 +10,7 @@
     "declarationMap": true,
     "noEmitOnError": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "jsx": "react",
     "noEmit": false,

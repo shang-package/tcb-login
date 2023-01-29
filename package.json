@@ -1,15 +1,20 @@
 {
   "name": "@s4p/tcb-login",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "pnpm exec ts-node ./index.ts",
     "build": "tsc",
     "deploy": "npm run build && cd dist && cp ../package.json ./ && npm publish --access public"
   },
   "bin": {
     "tcb-login": "./bin/tcb-login.js",
     "tcbl": "./bin/tcb-login.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shang-package/tcb-login.git"
   },
   "keywords": [],
   "author": "",
