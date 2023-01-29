@@ -1,5 +1,5 @@
 import commander from 'commander';
-import { ensureFile, pathExists, writeFile } from 'fs-extra';
+import { ensureFile, writeFile } from 'fs-extra';
 import open from 'open';
 import prompts from 'prompts';
 import which from 'which';
@@ -71,10 +71,10 @@ async function getArgs(configs: Config[]) {
 
 async function doDefaultAccount() {
   if (options.init) {
-    const isExists = await pathExists(DEFAULT_ACCOUNT_FILE_PATH);
+    const path = await getConfigPath(HOME_CONFIG_DIR);
 
-    if (isExists) {
-      throw new Errors.ConfigFileExists(undefined, '默认配置文件已存在, 无法重新生成');
+    if (path) {
+      throw new Errors.ConfigFileExists(path, '默认配置文件已存在, 无法重新生成');
     }
 
     await ensureFile(DEFAULT_ACCOUNT_FILE_PATH);
